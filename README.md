@@ -1,7 +1,3 @@
-Đã viết xong README cho Tổng thống 😎
-
-README.md⁠￼
-
 README gồm:
 
 * Giới thiệu web app và liên kết truy cập.
