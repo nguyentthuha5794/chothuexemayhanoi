@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -1412,7 +1412,8 @@ footer{border-top:1px solid var(--line);background:#070707;position:relative;z-i
     mail:  { href: "mailto:nguyentthuha5794@gmail.com", label: "GỬI EMAIL" },
     calc:  { href: "#calculator", label: "MỞ CÔNG CỤ TÍNH GIÁ" },
     veh:   { href: "#vehicles", label: "XEM DANH SÁCH XE" },
-    guide: { href: "#guide", label: "XEM HƯỚNG DẪN" }
+    guide: { href: "#guide", label: "XEM HƯỚNG DẪN" },
+    profiles: { href: "#profiles", label: "XEM HỒ SƠ CÔNG KHAI" }
   };
 
   const $  = function (s, c) { return (c || document).querySelector(s); };
@@ -1447,31 +1448,39 @@ footer{border-top:1px solid var(--line);background:#070707;position:relative;z-i
   function tick() {
     const t = vnNow();
     const open = t.mins >= OPEN_H * 60 && t.mins < CLOSE_H * 60;
-    const hhmmss = pad2(t.h) + ":" + pad2(t.m) + ":" + pad2(t.s);
-    if (hvClock) hvClock.textContent = "VN " + hhmmss;
-
+    const currentTime = pad2(t.h) + ":" + pad2(t.m);
+    const hhmmss = currentTime + ":" + pad2(t.s);
     const label = open ? "SYSTEM.OPEN" : "SYSTEM.CLOSED";
+    
+    if (hvClock) {
+      hvClock.textContent = "VN " + hhmmss;
+    }
+    
     if (lastStatus !== label) {
       if (statusChip) {
         statusChip.classList.toggle("open", open);
         statusChip.classList.toggle("closed", !open);
       }
-      if (statusTxt) statusTxt.textContent = label;
-      if (ibStatus) {
-        ibStatus.textContent = label + " — GIỜ VN " + pad2(t.h) + ":" + pad2(t.m);
-        ibStatus.style.color = open ? "#CCFF00" : "#FF6B35";
-      }
-      if (hvStatus) {
-        hvStatus.textContent = open
-          ? "Đang mở cửa · 09:00 – 21:00 (giờ VN " + pad2(t.h) + ":" + pad2(t.m) + ")"
-          : "Đã đóng cửa · Mở lúc 09:00 – 21:00 (giờ VN " + pad2(t.h) + ":" + pad2(t.m) + ")";
-        hvStatus.style.color = open ? "#CCFF00" : "#FF6B35";
+      if (statusTxt) {
+        statusTxt.textContent = label;
       }
       if (sideState) {
         sideState.textContent = label;
         sideState.style.color = open ? "#CCFF00" : "#FF6B35";
       }
       lastStatus = label;
+    }
+    
+    if (ibStatus) {
+      ibStatus.textContent = label + " — GIỜ VN " + currentTime;
+      ibStatus.style.color = open ? "#CCFF00" : "#FF6B35";
+    }
+    
+    if (hvStatus) {
+      hvStatus.textContent = open
+        ? "Đang mở cửa · 09:00 – 21:00 (giờ VN " + currentTime + ")"
+        : "Đã đóng cửa · Mở lúc 09:00 – 21:00 (giờ VN " + currentTime + ")";
+      hvStatus.style.color = open ? "#CCFF00" : "#FF6B35";
     }
   }
   tick();
@@ -1701,7 +1710,7 @@ footer{border-top:1px solid var(--line);background:#070707;position:relative;z-i
     {
       keys: [" danh gia ", " review "],
       text: "Bạn có thể xem các đánh giá (review) về Nguyễn Tú trên Tripadvisor hoặc Google Maps tại mục Hồ sơ công khai.",
-      links: ["guide"]
+      links: ["profiles"]
     },
     {
       keys: [" dien thoai ", " hotline ", " sdt ", " lien he ", " goi "],
